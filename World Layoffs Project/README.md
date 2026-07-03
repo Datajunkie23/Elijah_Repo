@@ -390,8 +390,8 @@ WHERE company = 'airbnb';
 ```
 
 ### Airbnb Update Result
-![BNB Update](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/BNB%20update.png)
 
+![BNB Update](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/BNB%20update.png)
 ---
 
 ### Carvana
@@ -573,7 +573,10 @@ FROM layoffs_staging
 ```
 
 ### Query Result
+
 ![Max Layoffs](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/Max%20Layoffs.png)
+
+
 ### Key Insight
 
 The analysis revealed that **Google** recorded the highest single layoff event in the dataset, laying off approximately **12,000 employees**.
@@ -680,7 +683,10 @@ ORDER BY 2 DESC;
 ```
 
 ### Query Result
+
 ![Industry Layoffs](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/Industry%20Layoffs.png)
+
+----
 
 ### Key Findings
 
@@ -727,6 +733,7 @@ ORDER BY total_layoffs DESC;
 ```
 
 ### Query Result
+
 ![Country Layoffs](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/Country%20Layoffs.png)
 
 ### Key Findings
@@ -774,7 +781,9 @@ ORDER BY total_layoffs DESC;
 ```
 
 ### Query Result
+
 ![Yearly Layoffs](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/Yearly%20Layoffs.png)
+
 
 ### Key Findings
 
@@ -816,6 +825,7 @@ ORDER BY total_layoffs DESC;
 ```
 
 ### Query Result
+
 ![Layoffs Staging](../SQL%20Projects%20Images/World%20Layoffs%20Project%20Images/Layoffs%20Staging.png)
 
 ### Key Findings

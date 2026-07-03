@@ -115,9 +115,6 @@ select industry,sum(total_laid_off) from layoffs_staging group by industry order
 -- Total layoffs by country
 select distinct country,sum(total_laid_off)over(partition by country) Total_layoffs from layoffs_staging order by  total_layoffs desc;
 
--- Total layoffs by date
-select date,sum(total_laid_off) from layoffs_staging group by date order by 1 desc;
-
 -- Total layoffs by year
 select year(date) year, sum(total_laid_off) total_layoffs from layoffs_staging group by year order by  total_layoffs desc;
 
