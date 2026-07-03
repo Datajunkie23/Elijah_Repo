@@ -1,0 +1,53 @@
+for this project, the first thing I did was to create a schema/database called world_layoffs. the project was divided into 2 sections. the first section was data cleaning and the second section was exploratory data analysis.
+after creating the schema, i ran the "use schema" query in sql in order to avoid typing the name of the database i am using each time i run a query.
+-importing data
+the data was in an excel sheet and it was imported into the database without making any modifications to it as at the time of import.
+the dataset contained information about layoffs from around the world and the dataset had columns like "company", location,
+industry, date, stage country and many more columns and it had a total of 2361 records.
+the name of the table that was imported is called "layoffs"
+# Data cleaning
+The data cleaning process comprised of 4 steps which are as follows.
+-Removing Duplicates
+-Standardizing data
+-Examined Null values and blank values
+-Removing unnecessary columns and rows
+before starting the cleaning process, the first thing I did was to create another table containing the exact dataset in the layoffs table. I did this to ensure that i still have a copy of the raw dataset should incase i need anything from there after making so much edits to the current table i am working with.
+# Removing duplicates
+The dataset in the layoffs table had no unique identifier so I made use of window functions. I selected all the columns in the table and I also "partitioned by" all the columns in the table then I eventually added a row_number(). This was I was able to spot duplicate records in the table by spotting the records that had a row number greater than 1. I did this using the concept of subqueries in sql. 
+ 
+-after finding the duplicates rows in the dataset, I had no option than do delete those records but MySQL does not support deleting records that were found via a subquery or cte. so I created a new table called "layoffs_staging" and I imported the the updated layoffs table into it; the layoffs table containing the row number.  after importing the updated data into a new table, I was able to delete all the duplicate records in the table. 
+
+- after deleting the duplicate records, I deleted the first layoffs_staging table that i created and then I renamed the "layoffs_staging2" table to layoffs_staging. I ran the sql query to check for duplicates again and I confirmed that there were no longer duplicate records in the dataset.
+
+# Standardizing data
+-the first step in the standardizing process was to take out all the whitespaces in the "company" column by using the "Trim" function in sql then I updated the company column in the layoffs_staging table with the trimmed column. 
+- the next column I explored was the "industry" column. in the process of exploring the industry column , I noticed that some of the records in the industry column looked really close to each other and it looked like it was an error from whoever entered the data. I made use of the like clause in sql to look for records like that so i could spot the error. after spotting the error, i used the update statement in sql to adjust those records.
+-I moved to the location column then I explored the country column. while i was exploring the country column i noticed errors with some of the records in the column. so i used the like clause in sql to find the records and then i used the update statement to correct them.
+
+- during the standardization process, I noticed that the date column had a text data type, so i used the str_to _date function in sql to convert the values in the date column to a sql date format then i changed the datatype of the "date" column from text to date.
+
+# Checking for null and blank values
+- another major step in the data cleaning process was checking for null values. I checked the industry column for null values and blank values. after finding the null values the next thing I did was to check the company name of the records with null or blank industry values then I checked the dataset to see  if there are other records in the table with the same "company" as the "company" with missing records. Then I checked the industries under those companies then I filled the blank industry values with that. I was able to do this for all records except one record whose company name didn't have any other record in the table.
+
+# The next and final step in the data cleaning process was to remove unnecessary columns and rows.  I deleted all the rows which had both their total_laid_off column or percentage_laid_off column either null or blank.
+-I also deleted the row number column that was created at the start of the project.
+
+
+
+
+# The second phase of the project was Exploratory Data Analysis(EDA)
+-the data was cleaned already from the first phase of the project.
+-I started the EDA by checking out the maximum(highest) (total_laid_off) and it was 12000 and the company was google. it should also be noted that the stage of the company is a post-ipo stage. from the analysis it looks like very large organizations laid off so many people.
+- I also checked out the maximum(perccentage_laid_off) and it was 1. for the companies with a percentage_laid_off of 1, I later found out that the entire company packed up/closed down. The companies completely went under and they completely lost all their employees. it should also be noted that a lot of the companies that went completely under had a lot of funding behind them. Does that mean a lot of investors lost their money?
+- I also checked out total_laid_off by company making use of the "sum" function in sql and the group by clause. the companies with the highest layoffs were 
+amazon(18150),google(12000),meta(11000),salesforce(10090),microsoft(10000),amongst others. does this further prove my point that the biggest companies laid off the most people?
+-I checked out total layoffs by industry and the most affected industries were consumer(45182) and retail(43613) among others. The least affected industries were manufacturing(20) and fintech(215). does that mean a lot of manufacturing was still happening during covid?
+- the next thing i checked was total layoffs by country. The country with the most layoffs was the united states(256559),
+india(35993),Netherlands(17220) among others. Why did America have the most layoffs?  I calculated this using "sum" aggregate function in sql and i also used window functions to partition by country to avoid getting a lump sum for all countries.
+- I checked out total layoffs by date but I found out that I could get more insights from total layoffs by year. so i checked out total layoffs by year. I found out that the year with the most layoffs was 2022 with about 160661 followed by 2023 with about 125677. The most surprising thing from this analysis is that the date range was from 11-03-2020 to 06-03-2023, which means in the first quarter of 2023 alone, there were already 125677 layoffs worldwide. The first quarter of 2023 has not even finished and there is so much layoffs in the world already. sounds scary. of course I used the concept of window functions for this query
+- Another thing I checked was total layoffs by stage. I noticed that public companies (post-ipo stage) had higher layoffs.
+- The next analysis I did was "total layoffs by year and month". so i used the substring function in sql to extract the year and the month from the date column and used the sum function in sql to find the total of each year-month and I used the window function concept in sql to "partition by" the year-month column to avoid having  on generic sum  and I used the distinct clause in order to get only unique year-months. I also did a month-on-month progression using the concept of window functions in sql.
+-The final analysis I did was to select the company , used window function to partition by date, then I used the sum function in sql to calculate the total layoffs and i used the dense_rank function to rank the layoffs in descending order and i selected the 5 highest layoffs from each year
+
+
+
